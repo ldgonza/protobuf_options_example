@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package test;
+
+import "descriptor.proto"; // Contains our custom descriptor
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/descriptor.proto";
+
+service TestService {
+  rpc UnsecuredMehtod (google.protobuf.Empty) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/Unsecured"
+    };
+
+    option (test.descriptor.unsecured) = true;
+  }
+
+  rpc SecuredMethod (google.protobuf.Empty) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/Secured"
+    };
+
+    option (test.descriptor.unsecured) = false;
+  }
+
+  rpc UnspecifiedMethod (google.protobuf.Empty) returns (google.protobuf.Empty) {
+  }
+}
